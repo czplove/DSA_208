@@ -1,0 +1,31 @@
+STARTUP MODULE  CMAIN
+                       ;;;此处用的是汇编语言
+
+$include(_SFR_INC_)
+
+cseg	at 0fb2080H
+PUBLIC  cstart
+EXTRN   main:NULL
+cstart:	
+        ecall   main          ;;;单片机默认从这个单元开始执行,第一句就是调用MAIN函数,其他就是逻辑顺序了 ,只要都放在一起就行
+
+
+_exit:
+	PUBLIC  _exit
+exit:
+	PUBLIC  exit
+
+cseg	at 0fb2100H
+PUBLIC  mtrap
+mtrap:
+	TRAP
+        RET   
+
+cseg	at 0fb2110H
+_cstop:
+	PUBLIC  _cstop          ; public for debuggers to set a breakpoint
+	BR      _cstop          ; keep on looping
+
+	end
+
+
